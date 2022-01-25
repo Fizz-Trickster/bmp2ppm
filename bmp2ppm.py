@@ -6,7 +6,7 @@ Created on Mon Jan 10 19:57:42 2022
 """
 
 import numpy as np
-
+import paramBMP
 # ========================================
 # Function
 # ========================================
@@ -14,37 +14,6 @@ def hex2dec(hexVar):
     decVar = int(hexVar, 16)
     
     return decVar
-
-# ========================================
-# parameter
-# ========================================
-
-para = {}
-
-# bfType : 2 Byte
-para['TYPE_BYTE_SIZE']  = 2
-para['TYPE_START_ADDR'] = 0
-para['TYPE_END_ADDR']   = para['TYPE_START_ADDR'] + 2*para['TYPE_BYTE_SIZE']
-
-# bfSize : 4 Byte
-para['SIZE_BYTE_SIZE']  = 4
-para['SIZE_START_ADDR'] = para['TYPE_END_ADDR']
-para['SIZE_END_ADDR']   = para['SIZE_START_ADDR'] + 2*para['SIZE_BYTE_SIZE']
-
-# bfReserved1 : 2 Byte
-para['RES1_BYTE_SIZE']  = 2
-para['RES1_START_ADDR'] = para['SIZE_END_ADDR']
-para['RES1_END_ADDR']   = para['RES1_START_ADDR'] + 2*para['RES1_BYTE_SIZE']
-
-# bfReserved2 : 2 Byte
-para['RES2_BYTE_SIZE']  = 2
-para['RES2_START_ADDR'] = para['RES1_END_ADDR']
-para['RES2_END_ADDR']   = para['RES2_START_ADDR'] + 2*para['RES2_BYTE_SIZE']
-
-# bfOffBits : 4 Byte
-para['OFFS_BYTE_SIZE']  = 4
-para['OFFS_START_ADDR'] = para['RES2_END_ADDR']
-para['OFFS_END_ADDR']   = para['OFFS_START_ADDR'] + 2*para['OFFS_BYTE_SIZE']
 
 # ========================================
 # main
@@ -55,11 +24,11 @@ bindata = file.read()
 strdata = bindata.hex()
 
 bfHeader = {}
-bfHeader['bfType']      = strdata[para['TYPE_START_ADDR']:para['TYPE_END_ADDR']]
-bfHeader['bfSize']      = strdata[para['SIZE_START_ADDR']:para['SIZE_END_ADDR']]
-bfHeader['bfReserved1'] = strdata[para['RES1_START_ADDR']:para['RES1_END_ADDR']]
-bfHeader['bfReserved2'] = strdata[para['RES2_START_ADDR']:para['RES2_END_ADDR']]
-bfHeader['bfOffBits']   = strdata[para['OFFS_START_ADDR']:para['OFFS_END_ADDR']]
+bfHeader['bfType']      = strdata[paramBMP.para['TYPE_START_ADDR']:paramBMP.para['TYPE_END_ADDR']]
+bfHeader['bfSize']      = strdata[paramBMP.para['SIZE_START_ADDR']:paramBMP.para['SIZE_END_ADDR']]
+bfHeader['bfReserved1'] = strdata[paramBMP.para['RES1_START_ADDR']:paramBMP.para['RES1_END_ADDR']]
+bfHeader['bfReserved2'] = strdata[paramBMP.para['RES2_START_ADDR']:paramBMP.para['RES2_END_ADDR']]
+bfHeader['bfOffBits']   = strdata[paramBMP.para['OFFS_START_ADDR']:paramBMP.para['OFFS_END_ADDR']]
 
 offset = bfHeader['bfOffBits'][6:8]+bfHeader['bfOffBits'][4:6]+bfHeader['bfOffBits'][2:4]+bfHeader['bfOffBits'][0:2] 
 offsetDec = hex2dec(offset)

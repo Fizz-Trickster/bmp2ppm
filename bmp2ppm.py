@@ -17,17 +17,20 @@ def hex2dec(hexVar):
 
 def getBMPHeader(bmpHexData):
     dict_Header = {}
-    dict_Header['bfType']      = bmpHexData[paramBMP.para['TYPE_START_ADDR']:paramBMP.para['TYPE_END_ADDR']]
-    dict_Header['bfSize']      = bmpHexData[paramBMP.para['SIZE_START_ADDR']:paramBMP.para['SIZE_END_ADDR']]
-    dict_Header['bfReserved1'] = bmpHexData[paramBMP.para['RES1_START_ADDR']:paramBMP.para['RES1_END_ADDR']]
-    dict_Header['bfReserved2'] = bmpHexData[paramBMP.para['RES2_START_ADDR']:paramBMP.para['RES2_END_ADDR']]
-    dict_Header['bfOffBits']   = bmpHexData[paramBMP.para['OFFS_START_ADDR']:paramBMP.para['OFFS_END_ADDR']]
+    dict_Header['bfType']       = bmpHexData[paramBMP.para['BFTYPE_START_ADDR']:paramBMP.para['BFTYPE_END_ADDR']]
+    dict_Header['bfSize']       = bmpHexData[paramBMP.para['BFSIZE_START_ADDR']:paramBMP.para['BFSIZE_END_ADDR']]
+    dict_Header['bfReserved1']  = bmpHexData[paramBMP.para['BFRES1_START_ADDR']:paramBMP.para['BFRES1_END_ADDR']]
+    dict_Header['bfReserved2']  = bmpHexData[paramBMP.para['BFRES2_START_ADDR']:paramBMP.para['BFRES2_END_ADDR']]
+    dict_Header['bfOffBits']    = bmpHexData[paramBMP.para['BFOFFS_START_ADDR']:paramBMP.para['BFOFFS_END_ADDR']]
+    dict_Header['biSize']       = bmpHexData[paramBMP.para['BISIZE_START_ADDR']:paramBMP.para['BISIZE_END_ADDR']]
+    dict_Header['biHres']       = bmpHexData[paramBMP.para['BIHRES_START_ADDR']:paramBMP.para['BIHRES_END_ADDR']]
+    dict_Header['biVres']       = bmpHexData[paramBMP.para['BIVRES_START_ADDR']:paramBMP.para['BIVRES_END_ADDR']]
     
     return dict_Header
 
 def getBMPOffset(str_bfOffset):
     offset= ""
-    for idx in range(0,paramBMP.para['OFFS_BYTE_SIZE']):
+    for idx in range(0,paramBMP.para['BFOFFS_BYTE_SIZE']):
         offset = str_bfOffset[2*idx:2*(idx+1)] + offset
     
     return hex2dec(offset)
@@ -41,6 +44,7 @@ strdata     = bindata.hex()
 
 bfHeader    = getBMPHeader(strdata)
 offsetDec   = getBMPOffset(bfHeader['bfOffBits'])
+
 
 pixData = strdata[2*offsetDec:] 
 

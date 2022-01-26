@@ -15,32 +15,34 @@ def hex2dec(hexVar):
     
     return decVar
 
+def getBMPHeader(bmpHexData):
+    dict_Header = {}
+    dict_Header['bfType']      = bmpHexData[paramBMP.para['TYPE_START_ADDR']:paramBMP.para['TYPE_END_ADDR']]
+    dict_Header['bfSize']      = bmpHexData[paramBMP.para['SIZE_START_ADDR']:paramBMP.para['SIZE_END_ADDR']]
+    dict_Header['bfReserved1'] = bmpHexData[paramBMP.para['RES1_START_ADDR']:paramBMP.para['RES1_END_ADDR']]
+    dict_Header['bfReserved2'] = bmpHexData[paramBMP.para['RES2_START_ADDR']:paramBMP.para['RES2_END_ADDR']]
+    dict_Header['bfOffBits']   = bmpHexData[paramBMP.para['OFFS_START_ADDR']:paramBMP.para['OFFS_END_ADDR']]
+    
+    return dict_Header
+
+def getBMPOffset(str_bfOffset):
+    offset= ""
+    for idx in range(0,paramBMP.para['OFFS_BYTE_SIZE']):
+        offset = str_bfOffset[2*idx:2*(idx+1)] + offset
+    
+    return hex2dec(offset)
 # ========================================
 # main
 # ========================================
 file = open('./image/flag.bmp','rb')
 
-bindata = file.read()
-strdata = bindata.hex()
+bindata     = file.read()
+strdata     = bindata.hex()
 
-bfHeader = {}
-bfHeader['bfType']      = strdata[paramBMP.para['TYPE_START_ADDR']:paramBMP.para['TYPE_END_ADDR']]
-bfHeader['bfSize']      = strdata[paramBMP.para['SIZE_START_ADDR']:paramBMP.para['SIZE_END_ADDR']]
-bfHeader['bfReserved1'] = strdata[paramBMP.para['RES1_START_ADDR']:paramBMP.para['RES1_END_ADDR']]
-bfHeader['bfReserved2'] = strdata[paramBMP.para['RES2_START_ADDR']:paramBMP.para['RES2_END_ADDR']]
-bfHeader['bfOffBits']   = strdata[paramBMP.para['OFFS_START_ADDR']:paramBMP.para['OFFS_END_ADDR']]
+bfHeader    = getBMPHeader(strdata)
+offsetDec   = getBMPOffset(bfHeader['bfOffBits'])
 
-offset = bfHeader['bfOffBits'][6:8]+bfHeader['bfOffBits'][4:6]+bfHeader['bfOffBits'][2:4]+bfHeader['bfOffBits'][0:2] 
-offsetDec = hex2dec(offset)
 pixData = strdata[2*offsetDec:] 
-
-bfType = strdata[:4]
-bfSize = strdata[4:12]
-bfReserved1 = strdata[12:16]
-bfReserved2 = strdata[16:20]
-bfOffBits = strdata[20:28]
-
-# pixData = strdata[108:]
 
 R = []
 G = []
@@ -65,8 +67,8 @@ for idx in range(len(R)-1, -1, -1):
     ppmFile.write('{0} {1} {2}\n'.format(R[idx],G[idx],B[idx]))
     
 # hex to ascii
-l = chr(hex2dec(bfType[:2]))
-m = chr(hex2dec(bfType[2:]))
+l = chr(hex2dec(bfHeader['bfType'][:2]))
+m = chr(hex2dec(bfHeader['bfType'][2:]))
 print(l+m)
 
 

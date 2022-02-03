@@ -1,4 +1,5 @@
 # bmp2ppm
+
 Convert bmp file to ppm file by python  
 > bmp file in image directory
 
@@ -8,4 +9,4 @@ Source code list
 
 Image file list
 > flag.bmp  
-> marbles.bmp
+> 24bpp-320x240.bmp

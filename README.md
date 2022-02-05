@@ -10,3 +10,6 @@ Source code list
 Image file list
 > flag.bmp  
 > 24bpp-320x240.bmp
+
+Processing Time  
+> 512x512 image : 159s

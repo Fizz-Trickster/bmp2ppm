@@ -52,8 +52,10 @@ def getDecodeData(i_data, BYTE_SIZE):
 # main
 # ========================================
 
-# file = open('./image/flag.bmp', 'rb')
-file = open('./image/24bpp-320x240.bmp', 'rb')
+#filePath = './image/24bpp-320x240.bmp'
+i_filePath = './image/flag.bmp'
+i_fileName = i_filePath.split('/')[-1].split('.')[0]
+file = open(i_filePath, 'rb')
 
 bindata = file.read()
 strdata = bindata.hex()
@@ -87,7 +89,8 @@ Gdata_2d_rev = np.flip(Gdata_2d, axis=0)
 Bdata_2d_rev = np.flip(Bdata_2d, axis=0)
 
 
-ppmFile = open('./output.ppm', 'w')
+o_filePath = i_fileName + '.ppm'
+ppmFile = open(o_filePath, 'w')
 
 ppmFile.write('P3\n')
 ppmFile.write('{0} {1}\n'.format(bfHeader['Hres'], bfHeader['Vres']))

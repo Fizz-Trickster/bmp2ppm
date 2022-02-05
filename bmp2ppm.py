@@ -7,6 +7,8 @@ Created on Mon Jan 10 19:57:42 2022
 
 import numpy as np
 
+import time
+
 import paramBMP
 
 # ========================================
@@ -51,9 +53,11 @@ def getDecodeData(i_data, BYTE_SIZE):
 # ========================================
 # main
 # ========================================
+start = time.time()
 
-#filePath = './image/24bpp-320x240.bmp'
-i_filePath = './image/flag.bmp'
+#i_filePath = './image/24bpp-320x240.bmp'
+#i_filePath = './image/flag.bmp'
+i_filePath = './image/lena.bmp'
 i_fileName = i_filePath.split('/')[-1].split('.')[0]
 file = open(i_filePath, 'rb')
 
@@ -68,13 +72,15 @@ R = []
 G = []
 B = []
 print(len(pixData))
-for idx in range(0, int(len(pixData)/6)):
-  b, pixData = pixData[:2], pixData[2:]
-  g, pixData = pixData[:2], pixData[2:]
-  r, pixData = pixData[:2], pixData[2:]
-  R.append(hex2dec(r))
-  G.append(hex2dec(g))
-  B.append(hex2dec(b))
+
+for idx in range(0, len(pixData), 2):
+  data = pixData[idx:idx+2]       
+  if idx % 3 == 0:
+    B.append(hex2dec(data))
+  elif idx % 3 == 1:
+    R.append(hex2dec(data))
+  else :
+    G.append(hex2dec(data))
 
 Rdata_1d = np.array(R)
 Gdata_1d = np.array(G)
@@ -100,6 +106,9 @@ for Vidx in range(0, bfHeader['Vres']):
   for Hidx in range(0, bfHeader['Hres']):
     ppmFile.write('{0} {1} {2}\n'.format(Rdata_2d_rev[Vidx][Hidx], Gdata_2d_rev[Vidx][Hidx], Bdata_2d_rev[Vidx][Hidx]))
     
-  
+
+end = time.time()
+print('processing time  = {0:0.5f} sec'.format(end-start))
+
 file.close()
 ppmFile.close()

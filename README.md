@@ -12,4 +12,4 @@ Image file list
 > 24bpp-320x240.bmp
 
 Processing Time  
-> 512x512 image : 159s
+> 512x512 image : 159s -> 1.51s

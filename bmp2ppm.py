@@ -23,21 +23,29 @@ def hex2dec(hexVar):
 
 
 def getBMPHeader(bmpHexData):
-  dict_Header                 = {}
+  dict_Header                     = {}
 
-  dict_Header['bfType']       = bmpHexData[paramBMP.para['BFTYPE_START_ADDR'] : paramBMP.para['BFTYPE_END_ADDR']]
-  dict_Header['bfSize']       = bmpHexData[paramBMP.para['BFSIZE_START_ADDR'] : paramBMP.para['BFSIZE_END_ADDR']]
-  dict_Header['bfReserved1']  = bmpHexData[paramBMP.para['BFRES1_START_ADDR'] : paramBMP.para['BFRES1_END_ADDR']]
-  dict_Header['bfReserved2']  = bmpHexData[paramBMP.para['BFRES2_START_ADDR'] : paramBMP.para['BFRES2_END_ADDR']]
-  dict_Header['bfOffBits']    = bmpHexData[paramBMP.para['BFOFFS_START_ADDR'] : paramBMP.para['BFOFFS_END_ADDR']]
-  dict_Header['biSize']       = bmpHexData[paramBMP.para['BISIZE_START_ADDR'] : paramBMP.para['BISIZE_END_ADDR']]
-  dict_Header['biHres']       = bmpHexData[paramBMP.para['BIHRES_START_ADDR'] : paramBMP.para['BIHRES_END_ADDR']]
-  dict_Header['biVres']       = bmpHexData[paramBMP.para['BIVRES_START_ADDR'] : paramBMP.para['BIVRES_END_ADDR']]
+  dict_Header['bfType']           = bmpHexData[paramBMP.para['BFTYPE_START_ADDR'] : paramBMP.para['BFTYPE_END_ADDR']]
+  dict_Header['bfSize']           = bmpHexData[paramBMP.para['BFSIZE_START_ADDR'] : paramBMP.para['BFSIZE_END_ADDR']]
+  dict_Header['bfReserved1']      = bmpHexData[paramBMP.para['BFRES1_START_ADDR'] : paramBMP.para['BFRES1_END_ADDR']]
+  dict_Header['bfReserved2']      = bmpHexData[paramBMP.para['BFRES2_START_ADDR'] : paramBMP.para['BFRES2_END_ADDR']]
+  dict_Header['bfOffBits']        = bmpHexData[paramBMP.para['BFOFFS_START_ADDR'] : paramBMP.para['BFOFFS_END_ADDR']]
+  dict_Header['biSize']           = bmpHexData[paramBMP.para['BISIZE_START_ADDR'] : paramBMP.para['BISIZE_END_ADDR']]
+  dict_Header['biHres']           = bmpHexData[paramBMP.para['BIHRES_START_ADDR'] : paramBMP.para['BIHRES_END_ADDR']]
+  dict_Header['biVres']           = bmpHexData[paramBMP.para['BIVRES_START_ADDR'] : paramBMP.para['BIVRES_END_ADDR']]
+  dict_Header['biPlanes']         = bmpHexData[paramBMP.para['BIPLAN_START_ADDR'] : paramBMP.para['BIPLAN_END_ADDR']]
+  dict_Header['biBitCount']       = bmpHexData[paramBMP.para['BIBITC_START_ADDR'] : paramBMP.para['BIBITC_END_ADDR']]
+  dict_Header['biCompression']    = bmpHexData[paramBMP.para['BICOMP_START_ADDR'] : paramBMP.para['BICOMP_END_ADDR']]
+  dict_Header['biSizeImage']      = bmpHexData[paramBMP.para['BISIMG_START_ADDR'] : paramBMP.para['BISIMG_END_ADDR']]
+  dict_Header['biXPelsPerMeter']  = bmpHexData[paramBMP.para['BIXPEL_START_ADDR'] : paramBMP.para['BIXPEL_END_ADDR']]
+  dict_Header['biYPelsPerMeter']  = bmpHexData[paramBMP.para['BIYPEL_START_ADDR'] : paramBMP.para['BIYPEL_END_ADDR']]
+  dict_Header['biClrUsed']        = bmpHexData[paramBMP.para['BICLRU_START_ADDR'] : paramBMP.para['BICLRU_END_ADDR']]
+  dict_Header['biClrImportant']   = bmpHexData[paramBMP.para['BICLRI_START_ADDR'] : paramBMP.para['BICLRI_END_ADDR']]
 
   # decode
-  dict_Header['Offset']       = getDecodeData(dict_Header['bfOffBits']  , paramBMP.para['BFOFFS_BYTE_SIZE'])
-  dict_Header['Hres']         = getDecodeData(dict_Header['biHres']     , paramBMP.para['BIHRES_BYTE_SIZE'])
-  dict_Header['Vres']         = getDecodeData(dict_Header['biVres']     , paramBMP.para['BIVRES_BYTE_SIZE'])
+  dict_Header['Offset']           = getDecodeData(dict_Header['bfOffBits']  , paramBMP.para['BFOFFS_BYTE_SIZE'])
+  dict_Header['Hres']             = getDecodeData(dict_Header['biHres']     , paramBMP.para['BIHRES_BYTE_SIZE'])
+  dict_Header['Vres']             = getDecodeData(dict_Header['biVres']     , paramBMP.para['BIVRES_BYTE_SIZE'])
 
   return dict_Header
 
